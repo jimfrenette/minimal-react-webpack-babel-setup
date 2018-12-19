@@ -1,7 +1,11 @@
-const webpack = require('webpack');
+const { WebpackPluginServe: Serve } = require('webpack-plugin-serve');
 
 module.exports = {
-  entry: './src/index.js',
+  mode: 'development',
+  entry: [
+    './src/index.js',
+    'webpack-plugin-serve/client'
+  ],
   module: {
     rules: [
       {
@@ -20,10 +24,11 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new Serve({
+      host: 'localhost',
+      static: ['./dist'],
+      open: true
+    })
   ],
-  devServer: {
-    contentBase: './dist',
-    hot: true
-  }
+  watch: true
 };
